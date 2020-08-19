@@ -88,18 +88,25 @@
 <script>
 function doLogin(){
 	var uiId = $('#ui_id').val();
-	var uiPassword = $('#ui_password').val();
+	var uiPWD = $('#ui_password').val();
 	var cmd = 'login';
 	var param = {
 			uiId : uiId,
-			uiPassword : uiPassword,
+			uiPWD : uiPWD,
 			cmd : cmd
 	}
 	$.ajax({
 		method : 'POST',
 		url : '/ajax/user',
 		data : JSON.stringify(param),
-		contentType : 'application/json'
+		contentType : 'application/json',
+			success : function(res){
+				if(res.result){
+					alert('로그인 완료!');
+				}else{
+					alert('아이디 비밀번호를 확인해주세요');
+				}
+			}
 	});
 }
 </script>	

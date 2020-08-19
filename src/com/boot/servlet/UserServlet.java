@@ -2,6 +2,8 @@ package com.boot.servlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -10,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.boot.service.UserService;
+import com.boot.service.Impl.UserServiceImpl;
+import com.boot.vo.UserInfoVO;
 import com.google.gson.Gson;
 
 
@@ -17,6 +22,8 @@ import com.google.gson.Gson;
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Gson gson = new Gson();   
+    private UserService userService = new UserServiceImpl();
+		
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -32,10 +39,14 @@ public class UserServlet extends HttpServlet {
 		while((str = br.readLine())!=null)	{
 			sb.append(str);
 		}
-		
-		Map<String,String> param = gson.fromJson(sb.toString(),Map.class);
-		System.out.println(param);
-		
+		UserInfoVO user  = gson.fromJson(sb.toString(), UserInfoVO.class);
+		Map<String,Object> result = new HashMap<>();
+		result.put("result", userService.doLogin(user, request.getSession()));
+		String json = gson.toJson(result);
+		PrintWriter pw = response.getWriter();
+		pw.println(json);
+		System.out.println(json);
 	}
 
+	
 }

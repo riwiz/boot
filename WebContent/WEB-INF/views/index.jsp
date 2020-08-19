@@ -43,5 +43,8 @@
 
 
 </nav>
+<div class="conainer">
+	${sessionScope.user.uiName}님 반갑습니다.
+</div>
 </body>
 </html>
