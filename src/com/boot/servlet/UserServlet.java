@@ -41,6 +41,13 @@ public class UserServlet extends HttpServlet {
 		}
 		UserInfoVO user  = gson.fromJson(sb.toString(), UserInfoVO.class);
 		Map<String,Object> result = new HashMap<>();
+		if("login".equals(user.getCmd())) {
+			result.put("result", userService.doLogin(user, request.getSession()));
+		}else if("signup".equals(user.getCmd())) {
+			result.put("result", userService.insertUser(user));
+		}else if("logout".equals(user.getCmd())) {
+			request.getSession().invalidate();
+		}
 		result.put("result", userService.doLogin(user, request.getSession()));
 		String json = gson.toJson(result);
 		PrintWriter pw = response.getWriter();

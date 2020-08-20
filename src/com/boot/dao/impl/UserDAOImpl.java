@@ -1,4 +1,4 @@
-package com.boot.impl;
+package com.boot.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +14,34 @@ public class UserDAOImpl implements UserDAO	{
 
 	@Override
 	public int insertUser(UserInfoVO user)	{
+		String sql ="insert into user_info(\r\n" + 
+				"ui_num,ui_name,ui_age,ui_birth,ui_id,ui_pwd,ui_phone,ui_email,ui_credat,ui_nickname)\r\n" + 
+				"values(\r\n" + 
+				"seq_ui_num.nextval,?,?,?,?,?,?,?,SYSDATE,?\r\n" + 
+				")";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			con = InitServlet.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, user.getUi_name());
+			ps.setInt(2, user.getUi_age());
+			ps.setString(3, user.getUi_birth());
+			ps.setString(4, user.getUi_id());
+			ps.setString(5, user.getUi_PWD());
+			ps.setString(6, user.getUi_phone());
+			ps.setString(7, user.getUi_email());
+			ps.setString(8, user.getUi_nickname());
+			int cnt = ps.executeUpdate();
+			con.commit();
+			return cnt;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return 0;
 	}
 
@@ -75,3 +103,5 @@ public class UserDAOImpl implements UserDAO	{
 
 	
 }
+	
+

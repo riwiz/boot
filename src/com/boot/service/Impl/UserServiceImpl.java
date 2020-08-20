@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.boot.dao.UserDAO;
-import com.boot.impl.UserDAOImpl;
+import com.boot.dao.impl.UserDAOImpl;
 import com.boot.service.UserService;
 import com.boot.servlet.InitServlet;
 import com.boot.vo.UserInfoVO;
@@ -16,8 +16,10 @@ public class UserServiceImpl implements UserService	{
 	@Override
 	public int insertUser(UserInfoVO user)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+//		if(uDAO.selectUserById(user.getUi_id())!=null)	{
+//			return -1;
+//		}
+		return uDAO.insertUser(user);
 	}
 
 	@Override

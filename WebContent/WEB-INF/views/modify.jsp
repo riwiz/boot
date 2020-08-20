@@ -17,54 +17,54 @@
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form">
 					<span class="login100-form-title p-b-49">
-						회원가입페이지
+						회원정보수정
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "name is reauired">
 						<span class="label-input100">Name</span>
-						<input class="input100" type="text" name="ui_name" id="ui_name" placeholder="Type your name">
+						<input class="input100" type="text" name="ui_name" id="ui_name" value="${user.ui_name}" placeholder="Type your name">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="ID is required">
 						<span class="label-input100">ID</span>
-						<input class="input100" type="text" name="ui_id" id="ui_id" placeholder="Type your ID">
+						<input class="input100" type="text" name="ui_id" id="ui_id" value="${user.ui_id}" placeholder="Type your ID">
 						<span class="focus-input100" data-symbol="&#9733;"></span>
 					</div>
 					
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "password is reauired">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="ui_password" id="ui_password" placeholder="Type your Password">
+						<input class="input100" type="password" name="ui_password" id="ui_password" value="${user.ui_pwd}" placeholder="Type your Password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="nickname is required">
 						<span class="label-input100">NickName</span>
-						<input class="input100" type="text" name="ui_nickname" id="ui_nickname" placeholder="Type your Nickname">
+						<input class="input100" type="text" name="ui_nickname" id="ui_nickname" value="${user.ui_nickname}" placeholder="Type your Nickname">
 						<span class="focus-input100" data-symbol="&#x2620;"></span>
 					</div>
 					
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "age is reauired">
 						<span class="label-input100">Age</span>
-						<input class="input100" type="text" name="ui_age" id="ui_age" placeholder="Type your age">
+						<input class="input100" type="text" name="ui_age" id="ui_age" value="${user.ui_age}" placeholder="Type your age">
 						<span class="focus-input100" data-symbol="&#9787;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="birthday is required">
 						<span class="label-input100">Birthday</span>
-						<input class="input100" type="date" name="ui_date" id="ui_date" placeholder="Type your birthday">
+						<input class="input100" type="date" name="ui_date" id="ui_date" value="${user.ui_date}" placeholder="Type your birthday">
 						<span class="focus-input100" data-symbol="&#x212C;"></span>
 					</div>
 					
 						<div class="wrap-input100 validate-input m-b-23" data-validate = "phone is reauired">
 						<span class="label-input100">Phone</span>
-						<input class="input100" type="text" name="ui_phone" id="ui_phone" placeholder="Type your phone">
+						<input class="input100" type="text" name="ui_phone" id="ui_phone" value="${user.ui_phone}" placeholder="Type your phone">
 						<span class="focus-input100" data-symbol="&#x2706;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="email is required">
 						<span class="label-input100">email</span>
-						<input class="input100" type="text" name="ui_email" id="ui_email" placeholder="Type your email">
+						<input class="input100" type="text" name="ui_email" id="ui_email" value="${user.ui_email}"placeholder="Type your email">
 						<span class="focus-input100" data-symbol="&#x2709;"></span>
 					</div>
 					
@@ -72,7 +72,7 @@
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button type="button" class="login100-form-btn" onclick="doSignup()">
-								회원가입
+								정보수정
 							</button>
 						</div>
 					</div>

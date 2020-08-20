@@ -13,7 +13,7 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('/res/images/bg-01.jpg');">
+		<div class="container-login100" style="background-image: url('/res/images/Kakao.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form">
 					<span class="login100-form-title p-b-49">
@@ -87,12 +87,12 @@
 
 <script>
 function doLogin(){
-	var uiId = $('#ui_id').val();
-	var uiPWD = $('#ui_password').val();
+	var ui_id = $('#ui_id').val();
+	var ui_PWD = $('#ui_password').val();
 	var cmd = 'login';
 	var param = {
-			uiId : uiId,
-			uiPWD : uiPWD,
+			ui_id : ui_id,
+			ui_PWD : ui_PWD,
 			cmd : cmd
 	}
 	$.ajax({
@@ -103,6 +103,7 @@ function doLogin(){
 			success : function(res){
 				if(res.result){
 					alert('로그인 완료!');
+					location='/'
 				}else{
 					alert('아이디 비밀번호를 확인해주세요');
 				}
