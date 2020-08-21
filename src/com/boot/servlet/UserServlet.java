@@ -27,8 +27,14 @@ public class UserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String contentType = response.getContentType();		
-		response.getWriter().append("Served at: ").append(request.getContextPath()).append(contentType);
+		String cmd = request.getParameter("cmd");
+		Map<String,Object> result = new HashMap<>();
+		if("checkID".equals(cmd)) {
+			String uiId = request.getParameter("ui_id");
+			result.put("result", userService.checkUserId(uiId));
+		}
+		PrintWriter pw = response.getWriter();
+		pw.println(gson.toJson(result));
 	}
 
 	
@@ -47,8 +53,12 @@ public class UserServlet extends HttpServlet {
 			result.put("result", userService.insertUser(user));
 		}else if("logout".equals(user.getCmd())) {
 			request.getSession().invalidate();
+			result.put("result", true);
+		}else if("modify".equals(user.getCmd())) {
+			result.put("result", userService.updateUser(user,request.getSession()));
 		}
-		result.put("result", userService.doLogin(user, request.getSession()));
+		
+		
 		String json = gson.toJson(result);
 		PrintWriter pw = response.getWriter();
 		pw.println(json);

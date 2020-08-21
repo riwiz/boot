@@ -13,9 +13,10 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('/res/images/Kakao.jpg');">
+		<div class="container-login100" style="background-image: url('/res/images/Kakao.jpg')">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form">
+					<input type="hidden" name="ui_num" id="ui_num" value="${user.ui_num}">
 					<span class="login100-form-title p-b-49">
 						회원정보수정
 					</span>
@@ -34,7 +35,7 @@
 					
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "password is reauired">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="ui_password" id="ui_password" value="${user.ui_pwd}" placeholder="Type your Password">
+						<input class="input100" type="password" name="ui_password" id="ui_password" value="${user.ui_PWD}" placeholder="Type your Password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 
@@ -52,7 +53,7 @@
 
 					<div class="wrap-input100 validate-input" data-validate="birthday is required">
 						<span class="label-input100">Birthday</span>
-						<input class="input100" type="date" name="ui_date" id="ui_date" value="${user.ui_date}" placeholder="Type your birthday">
+						<input class="input100" type="date" name="ui_birth" id="ui_birth" value="${user.ui_birth}" placeholder="Type your birthday">
 						<span class="focus-input100" data-symbol="&#x212C;"></span>
 					</div>
 					
@@ -71,7 +72,7 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button type="button" class="login100-form-btn" onclick="doSignup()">
+							<button type="button" class="login100-form-btn" onclick="domodify()">
 								정보수정
 							</button>
 						</div>
@@ -116,14 +117,14 @@
 
 
 <script>
-function doSignup(){
+function domodify(){
 	var els = document.querySelectorAll('input');
 	var params ={};
 	for(var i=0;i<els.length;i++){
 		var el = els[i]
 		params[el.name] = el.value;
 	}
-	params.cmd = 'signup;'
+	params.cmd = 'modify;'
 	$.ajax({
 		url :'ajax/user',
 		method : 'POST',
@@ -131,14 +132,37 @@ function doSignup(){
 		contentType : 'application/json',
 		success : function(res){
 			if(res.result===1){
-				alert('회원가입이 완료되었습니다.');
-				location.href='views/login';
-			}else{
-				alert('문제있음!!!!!')
-			}
+				alert('회원정보가 수정되었습니다.');
+				location.href='/';
+			  }else if(res.result===-1){
+ 				  alert('이미 존재하는 아이디입니다.');
+ 			  }else{
+ 				  alert('문제 있음');
+ 			  }
 		}
 		
 	})
+}
+function setUiAge(f){
+	   var birthDate = new Date(f.value);
+	   var toDate = new Date();  
+	   document.querySelector('#ui_age').value = (toDate.getFullYear()-birthDate.getFullYear()+1);
+}
+function checkID(){
+	   var id = document.querySelector('#ui_id').value;
+	   var url = '/ajax/user';
+	   $.ajax({
+		   url : url,
+		   method : 'GET',
+		   data : {ui_id:id,cmd:'checkID'},
+		   success : function(res){
+			   if(res.result){
+				   alert('가입 가능합니다.');
+			   }else{
+				   alert('가입이 불가능한 아이디입니다.');
+			   }
+		   }
+	   });
 }
 </script>	
 

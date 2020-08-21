@@ -40,6 +40,8 @@ public class UserDAOImpl implements UserDAO	{
 			return cnt;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			InitServlet.close(ps, con);
 		}
 		
 		return 0;
@@ -52,11 +54,46 @@ public class UserDAOImpl implements UserDAO	{
 
 	@Override
 	public int updateUser(UserInfoVO user)	{
+		String sql ="update user_info\r\n" + 
+				"set ui_name=?,\r\n" + 
+				"ui_age =?,\r\n" + 
+				"ui_birth =?,\r\n" + 
+				"ui_pwd =?,\r\n" + 
+				"ui_phone=?,\r\n" + 
+				"UI_EMAIL=?,\r\n" + 
+				"UI_NICKNAME=?\r\n" + 
+				"where ui_num=?";
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+			con = InitServlet.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, user.getUi_name());
+			ps.setInt(2, user.getUi_age());
+			ps.setString(3, user.getUi_birth());
+			ps.setString(4, user.getUi_PWD());
+			ps.setString(5, user.getUi_phone());
+			ps.setString(6, user.getUi_email());
+			ps.setString(7, user.getUi_nickname());
+			ps.setInt(8, user.getUi_num());
+			int cnt = ps.executeUpdate();
+			con.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			InitServlet.close(ps, con);
+		}
+		
+		
+		
 		return 0;
 	}
 
 	@Override
 	public UserInfoVO selectUser(UserInfoVO user)	{
+		
+		
 		return null;
 	}
 
@@ -89,18 +126,51 @@ public class UserDAOImpl implements UserDAO	{
 				ui.setUi_phone(rs.getString("ui_phone"));
 				ui.setUi_id(rs.getString("ui_id"));
 				ui.setUi_PWD(rs.getString("ui_PWD"));
+				ui.setUi_admin(rs.getString("ui_admin"));
 				return ui;
 			}
 		
 			
 		}catch(SQLException e)	{
-			
+			e.printStackTrace();
 		}finally {
 			InitServlet.close(rs,ps,con);
 		}
 		return null;
 	}
 
+	
+	@Override
+	public UserInfoVO selectUserById(String ui_id) {
+		String sql = "select * from user_info where ui_id=?";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = InitServlet.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, ui_id);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				UserInfoVO ui = new UserInfoVO();
+				ui.setUi_num(rs.getInt("ui_num"));
+				ui.setUi_name(rs.getString("ui_name"));
+				ui.setUi_age(rs.getInt("ui_age"));
+				ui.setUi_id(rs.getString("ui_id"));
+				ui.setUi_birth(rs.getString("ui_birth"));
+				ui.setUi_phone(rs.getString("ui_phone"));
+				ui.setUi_nickname(rs.getString("ui_nickname"));
+				ui.setUi_credat(rs.getString("ui_credat"));
+				ui.setUi_email(rs.getString("ui_email"));
+				return ui;
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			InitServlet.close(rs, ps, con);
+		}
+		return null;
+	}
 	
 }
 	

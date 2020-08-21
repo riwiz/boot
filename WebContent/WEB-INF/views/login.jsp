@@ -103,7 +103,7 @@ function doLogin(){
 			success : function(res){
 				if(res.result){
 					alert('로그인 완료!');
-					location='/'
+					location.href='/';
 				}else{
 					alert('아이디 비밀번호를 확인해주세요');
 				}
