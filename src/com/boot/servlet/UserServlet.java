@@ -56,6 +56,8 @@ public class UserServlet extends HttpServlet {
 			result.put("result", true);
 		}else if("modify".equals(user.getCmd())) {
 			result.put("result", userService.updateUser(user,request.getSession()));
+		}else if("list".equals(user.getCmd())) {
+			result.put("list", userService.selectUserList(null));
 		}
 		
 		

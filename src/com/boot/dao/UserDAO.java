@@ -14,3 +14,4 @@ public interface UserDAO {
 	List<UserInfoVO> selectUserList(UserInfoVO user);
 	
 }
+ 

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.boot.dao.UserDAO;
@@ -84,9 +85,6 @@ public class UserDAOImpl implements UserDAO	{
 		}finally {
 			InitServlet.close(ps, con);
 		}
-		
-		
-		
 		return 0;
 	}
 
@@ -99,7 +97,38 @@ public class UserDAOImpl implements UserDAO	{
 
 	@Override
 	public List<UserInfoVO> selectUserList(UserInfoVO user)	{
-		return null;
+		List<UserInfoVO> userList = new ArrayList<>();
+		String sql ="select UI_NUM,UI_NAME,UI_AGE,UI_BIRTH,UI_ID,UI_PWD,UI_PHONE,UI_EMAIL,UI_CREDAT,UI_NICKNAME,UI_ADMIN from user_info";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+				
+		try {
+			con = InitServlet.getConnection();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next())	{
+				UserInfoVO ui = new UserInfoVO();
+				ui.setUi_num(rs.getInt("ui_num"));
+				ui.setUi_name(rs.getString("ui_name"));
+				ui.setUi_age(rs.getInt("ui_age"));
+				ui.setUi_birth(rs.getString("ui_birth"));
+				ui.setUi_id(rs.getString("ui_birth"));
+				ui.setUi_PWD(rs.getString("ui_pwd"));
+				ui.setUi_phone(rs.getString("ui_phone"));
+				ui.setUi_email(rs.getString("ui_email"));
+				ui.setUi_credat(rs.getString("ui_credat"));
+				ui.setUi_nickname(rs.getString("ui_nickname"));
+				ui.setUi_admin(rs.getString("ui_admin"));
+				userList.add(ui);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally	{
+			InitServlet.close(rs, ps, con);
+		}
+		
+		return userList;
 	}
 
 	@Override

@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService	{
 	@Override
 	public List<UserInfoVO> selectUserList(UserInfoVO user)
 	{
-		return null;
+		return uDAO.selectUserList(user);
 	}
 
 	@Override
@@ -68,4 +68,5 @@ public class UserServiceImpl implements UserService	{
 		}
 		return false;
 	}
+
 }
