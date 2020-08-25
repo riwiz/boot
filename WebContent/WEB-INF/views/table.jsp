@@ -16,7 +16,7 @@ var colList = [
 	{colNo:5, colArea:'인천', colSum:1322, colNew:4},
 	{colNo:6, colArea:'광주', colSum:543, colNew:20},
 	{colNo:7, colArea:'부산', colSum:280, colNew:1},
-	];
+	];                                                      
 
 var loadData = function(){
 	var html ='';

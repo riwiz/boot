@@ -10,6 +10,36 @@
 <body>
 
 <script>
+
+var func = function(){
+	document.querySelector('#deleteBtn').onclick = function(){
+		var uiNumObjs = document.querySelectorAll('[name=ui_num]:checked');
+		if(!uiNumObjs.length){
+			alert('선택을 하고 누르라고!');
+			return;
+		}
+		
+		var uiNums=[];
+		for(var i=0;i<uiNumObjs.length;i++){
+			uiNums.push(uiNumObjs[i].value);
+		}
+		var params ={
+				uiNums:uiNums,
+				cmd : 'deleteUsers'
+		}
+		$.ajax({
+			url : '/ajax/user',
+			method : 'POST',
+			data : JSON.stringify(parmams),
+			success : function(res){
+			}	
+			}
+		})
+	}
+	document.querySelectorAll('#allcheck').onchange = function(){
+		$('[name=ui_num]').prop('checked',this.checked);
+	}
+}
 $(document).ready(function(){
 /* 	$('#userListDiv').html('하하하~'); */
 	$.ajax({
@@ -17,28 +47,35 @@ $(document).ready(function(){
 		method : 'GET',
 		data : {cmd:'list'},
 		success:function(res){
-			var html='<table border="1">';
-			for(var i=0;i<res.list.length;i++){
+			var ths = document.querySelectorAll('th[data-col],th[data-pk]');
+			var html='';
+				for(var i=0;i<res.list.length;i++){
 				var user = res.list[i];
 				html += '<tr>';
-				$('th[data-col]').each(function(idx,th){
-				var userAt = th.getAttribute('data-col');
-				html += '<td>'+user[userAt]+'</td>';
-				})
-				html +='</tr></table>';
+				for(var j=0;j<ths.length;j++){
+				var th = ths[j];
+				var col = th.getAttribute('data-col');
+				if(col){
+					html += '<td>'+ user[col] +'</td>';
+				}else{
+					col = th.getAttribute('data-pk');
+					html += '<td><input type="checkbox" name="'+ col'" value="' = user[col] +'"></td>';
 				}
-			$('#userListDiv').html(html);		
+				}
+				html +='</tr>';
+				
+				}
+			$('#listbody').html(html);		
 				
 		}
 		
-	})
-	
 })
 </script>
 <h3>유저리스트</h3>
 <div id="userListDiv">
 	<table class="table table-bordered">
 		<tr>
+			<th data-pk="ui_num"><input type="checkbox" id="allCheck"></th>
 			<th data-col="ui_num">번호</th>
 			<th data-col="ui_age">나이</th>
 			<th data-col="ui_name">이름</th>
@@ -54,6 +91,7 @@ $(document).ready(function(){
 		</tbody>
 			
 	</table>
+	<button class="btn btn-primary" id="deleteBtn">유저삭제</button>
 	</div>
 </body>
 </html>

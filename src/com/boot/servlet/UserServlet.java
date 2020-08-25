@@ -18,7 +18,7 @@ import com.boot.vo.UserInfoVO;
 import com.google.gson.Gson;
 
 
-@WebServlet("/ajax/user/*")
+@WebServlet("/ajax/user")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Gson gson = new Gson();   
@@ -32,6 +32,8 @@ public class UserServlet extends HttpServlet {
 		if("checkID".equals(cmd)) {
 			String uiId = request.getParameter("ui_id");
 			result.put("result", userService.checkUserId(uiId));
+		}else if("list".equals(cmd)) {
+			result.put("list", userService.selectUserList(null));
 		}
 		PrintWriter pw = response.getWriter();
 		pw.println(gson.toJson(result));
@@ -46,6 +48,7 @@ public class UserServlet extends HttpServlet {
 			sb.append(str);
 		}
 		UserInfoVO user  = gson.fromJson(sb.toString(), UserInfoVO.class);
+		
 		Map<String,Object> result = new HashMap<>();
 		if("login".equals(user.getCmd())) {
 			result.put("result", userService.doLogin(user, request.getSession()));
@@ -56,8 +59,6 @@ public class UserServlet extends HttpServlet {
 			result.put("result", true);
 		}else if("modify".equals(user.getCmd())) {
 			result.put("result", userService.updateUser(user,request.getSession()));
-		}else if("list".equals(user.getCmd())) {
-			result.put("list", userService.selectUserList(null));
 		}
 		
 		
